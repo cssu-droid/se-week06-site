@@ -1,595 +1,116 @@
-```html
 <!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>自己紹介サイト</title>
+  <title>Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    :root {
-      --bg: #0f172a;
-      --bg-soft: #111827;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.15);
-      --text: #e5e7eb;
-      --text-soft: #9ca3af;
-      --border: #1f2937;
-      --card: #020617;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 55%, #000 100%);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
+      font-family: sans-serif;
+      margin: 0;
       padding: 16px;
+      background: #f5f5f5;
+      color: #333;
     }
-
-    .shell {
-      width: 100%;
-      max-width: 960px;
-      background: linear-gradient(145deg, rgba(15,23,42,0.98), rgba(15,23,42,0.92));
-      border-radius: 18px;
-      border: 1px solid rgba(148,163,184,0.25);
-      box-shadow:
-        0 24px 80px rgba(15,23,42,0.9),
-        0 0 0 1px rgba(15,23,42,0.9);
-      overflow: hidden;
-      backdrop-filter: blur(18px);
-    }
-
-    .shell-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      background: radial-gradient(circle at top left, #1f2937, #020617);
-      border-bottom: 1px solid rgba(148,163,184,0.25);
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-    }
-
-    .dot.red { background: #f97373; }
-    .dot.yellow { background: #facc15; }
-    .dot.green { background: #4ade80; }
-
-    .shell-title {
-      margin-left: auto;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #6b7280;
-    }
-
     header {
-      padding: 20px 20px 8px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
+      text-align: center;
+      margin-bottom: 24px;
     }
-
-    .avatar {
-      width: 64px;
-      height: 64px;
-      border-radius: 18px;
-      background: radial-gradient(circle at 30% 0, #38bdf8, #4f46e5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 26px;
-      color: #e5f2ff;
-      box-shadow:
-        0 0 0 1px rgba(15,23,42,0.9),
-        0 18px 40px rgba(56,189,248,0.45);
-    }
-
-    .hero-main {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .hero-name {
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #e5e7eb;
-    }
-
-    .hero-role {
-      font-size: 13px;
-      color: var(--text-soft);
-      margin-top: 4px;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .tag {
-      font-size: 11px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.4);
-      color: #cbd5f5;
-      background: radial-gradient(circle at top, rgba(15,23,42,0.9), rgba(15,23,42,0.7));
-    }
-
-    .hero-meta {
-      font-size: 11px;
-      color: #9ca3af;
-      text-align: right;
-      min-width: 120px;
-    }
-
     nav {
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 8px 16px 14px;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(to right, rgba(15,23,42,0.9), rgba(15,23,42,0.96));
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 20px;
     }
-
-    .nav-link {
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      color: #9ca3af;
+    nav button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 6px;
       cursor: pointer;
-      background: transparent;
-      transition: all 0.18s ease-out;
     }
-
-    .nav-link span {
-      font-size: 10px;
-      opacity: 0.7;
-      margin-left: 4px;
+    nav button.active {
+      background: #0078ff;
+      color: white;
+      border-color: #0078ff;
     }
-
-    .nav-link.active {
-      color: #e5f2ff;
-      border-color: rgba(56,189,248,0.7);
-      background: radial-gradient(circle at top, rgba(56,189,248,0.18), rgba(15,23,42,0.9));
-      box-shadow: 0 0 0 1px rgba(15,23,42,0.9);
-    }
-
-    .nav-link:hover {
-      color: #e5f2ff;
-      border-color: rgba(148,163,184,0.7);
-      background: radial-gradient(circle at top, rgba(148,163,184,0.18), rgba(15,23,42,0.9));
-    }
-
-    main {
-      padding: 16px;
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-      gap: 14px;
-    }
-
-    @media (max-width: 768px) {
-      .shell {
-        border-radius: 14px;
-      }
-      header {
-        padding: 16px 14px 8px;
-      }
-      main {
-        grid-template-columns: minmax(0, 1fr);
-        padding: 12px;
-      }
-      .hero-meta {
-        text-align: left;
-      }
-    }
-
     section {
-      background: radial-gradient(circle at top left, rgba(15,23,42,0.98), rgba(15,23,42,0.96));
-      border-radius: 14px;
-      border: 1px solid rgba(31,41,55,0.9);
-      padding: 14px 14px 12px;
-      box-shadow:
-        0 18px 40px rgba(15,23,42,0.9),
-        0 0 0 1px rgba(15,23,42,0.9);
-      position: relative;
-      overflow: hidden;
+      display: none;
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      max-width: 700px;
+      margin: 0 auto;
     }
-
-    section::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(56,189,248,0.12), transparent 55%);
-      opacity: 0.7;
-      pointer-events: none;
+    section.active {
+      display: block;
     }
-
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 8px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-title {
-      font-size: 13px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #9ca3af;
-    }
-
-    .section-pill {
-      font-size: 10px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.5);
-      color: #cbd5f5;
-      background: rgba(15,23,42,0.9);
-    }
-
-    .section-body {
-      font-size: 13px;
-      color: #d1d5db;
-      position: relative;
-      z-index: 1;
-    }
-
-    .section-body p + p {
-      margin-top: 6px;
-    }
-
-    .muted {
-      color: var(--text-soft);
-      font-size: 12px;
-    }
-
-    .grid-two {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    @media (max-width: 640px) {
-      .grid-two {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    .chip {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(55,65,81,0.9);
-      background: rgba(15,23,42,0.96);
-      color: #e5e7eb;
-    }
-
-    .meter {
-      margin-top: 6px;
-    }
-
-    .meter-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 11px;
-      color: #9ca3af;
-      margin-bottom: 2px;
-    }
-
-    .meter-bar {
-      width: 100%;
-      height: 6px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.9);
-      overflow: hidden;
-      border: 1px solid rgba(31,41,55,0.9);
-    }
-
-    .meter-fill {
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #38bdf8, #4f46e5);
-      box-shadow: 0 0 12px rgba(56,189,248,0.7);
-      transform-origin: left;
-      transform: scaleX(0.8);
-    }
-
-    .card-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .card {
-      border-radius: 10px;
-      border: 1px solid rgba(31,41,55,0.9);
-      background: rgba(15,23,42,0.96);
-      padding: 8px 9px;
-    }
-
-    .card-title {
-      font-size: 12px;
-      color: #e5e7eb;
-      margin-bottom: 2px;
-    }
-
-    .card-meta {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-bottom: 4px;
-    }
-
-    .card-body {
-      font-size: 12px;
-      color: #d1d5db;
-    }
-
-    footer {
-      padding: 8px 14px 10px;
-      border-top: 1px solid var(--border);
-      font-size: 10px;
-      color: #6b7280;
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      background: radial-gradient(circle at bottom, #020617, #020617);
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.18);
-      margin-right: 6px;
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .hint {
-      text-align: right;
-    }
-
-    .hint span {
-      color: #9ca3af;
+    h2 {
+      margin-top: 0;
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <div class="shell-header">
-      <div class="dot red"></div>
-      <div class="dot yellow"></div>
-      <div class="dot green"></div>
-      <div class="shell-title">personal profile · static site</div>
-    </div>
 
-    <header>
-      <div class="avatar">S</div>
-      <div class="hero-main">
-        <div class="hero-name">Shuto · Profile</div>
-        <div class="hero-role">学習中のエンジニア志望 / Web & ソフトウェア基礎</div>
-        <div class="hero-tags">
-          <div class="tag"># HTML / CSS / JS</div>
-          <div class="tag"># Software Engineering</div>
-          <div class="tag"># Learning by building</div>
-        </div>
-      </div>
-      <div class="hero-meta">
-        last updated: <span id="last-updated">—</span><br>
-        view: mobile‑first / static
-      </div>
-    </header>
+<header>
+  <h1>Profile</h1>
+  <p>シンプルな自己紹介サイト（個人情報なし）</p>
+</header>
 
-    <nav>
-      <button class="nav-link active" data-target="about">About<span>自己紹介</span></button>
-      <button class="nav-link" data-target="skills">Skills<span>スキル</span></button>
-      <button class="nav-link" data-target="works">Works<span>制作物</span></button>
-      <button class="nav-link" data-target="reflection">Reflection<span>振り返り</span></button>
-    </nav>
+<nav>
+  <button class="tab active" data-target="about">About</button>
+  <button class="tab" data-target="skills">Skills</button>
+  <button class="tab" data-target="works">Works</button>
+  <button class="tab" data-target="reflection">Reflection</button>
+</nav>
 
-    <main>
-      <section id="about" data-section>
-        <div class="section-header">
-          <div class="section-title">About</div>
-          <div class="section-pill">who I am</div>
-        </div>
-        <div class="section-body">
-          <p>ソフトウェア工学や Web 技術を中心に学んでいる学生です。授業や個人学習を通して、コードを書きながら仕組みを理解することを大切にしています。</p>
-          <p class="muted">このページは、自己紹介と学習の記録を兼ねたシンプルな静的サイトとして作成しました。個人情報は控えめにしつつ、興味や方向性が伝わる構成を意識しています。</p>
-          <div class="grid-two" style="margin-top:8px;">
-            <div>
-              <p class="muted">興味のある分野</p>
-              <div class="chip-row">
-                <div class="chip">Web 開発</div>
-                <div class="chip">ソフトウェア設計</div>
-                <div class="chip">機械学習の基礎</div>
-              </div>
-            </div>
-            <div>
-              <p class="muted">学びのスタイル</p>
-              <div class="chip-row">
-                <div class="chip">手を動かして理解</div>
-                <div class="chip">小さく試して改善</div>
-                <div class="chip">記録を残す</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+<section id="about" class="active">
+  <h2>About</h2>
+  <p>Web 技術やプログラミングに興味があり、基礎を学びながら小さな制作を続けています。</p>
+  <p>このサイトは 1 ファイル構成で作られた練習用ページです。</p>
+</section>
 
-      <section id="skills" data-section style="display:none;">
-        <div class="section-header">
-          <div class="section-title">Skills</div>
-          <div class="section-pill">what I use</div>
-        </div>
-        <div class="section-body">
-          <p>まだ学習中ですが、授業や個人の練習を通して少しずつ触れている技術です。実務レベルではなく「基礎を理解し始めた段階」としてのスキル感です。</p>
+<section id="skills">
+  <h2>Skills</h2>
+  <ul>
+    <li>HTML / CSS（基礎）</li>
+    <li>JavaScript（簡単な動き）</li>
+    <li>Git / GitHub（基本操作）</li>
+  </ul>
+</section>
 
-          <div class="meter">
-            <div class="meter-label">
-              <span>HTML / CSS</span><span>基礎レイアウト</span>
-            </div>
-            <div class="meter-bar">
-              <div class="meter-fill" style="transform:scaleX(0.78);"></div>
-            </div>
-          </div>
+<section id="works">
+  <h2>Works</h2>
+  <p>学習の中で作った小さな制作物をまとめています。</p>
+  <ul>
+    <li>1ファイル構成の自己紹介ページ</li>
+    <li>GitHub を使ったバージョン管理の練習</li>
+  </ul>
+</section>
 
-          <div class="meter">
-            <div class="meter-label">
-              <span>JavaScript</span><span>簡単な動き</span>
-            </div>
-            <div class="meter-bar">
-              <div class="meter-fill" style="transform:scaleX(0.6);"></div>
-            </div>
-          </div>
+<section id="reflection">
+  <h2>Reflection</h2>
+  <p>制約のある中で作ることで、構造や情報整理の大切さを実感しました。</p>
+  <p>今後も小さく作って改善する流れを続けていきたいです。</p>
+</section>
 
-          <div class="meter">
-            <div class="meter-label">
-              <span>Git / GitHub</span><span>基本操作</span>
-            </div>
-            <div class="meter-bar">
-              <div class="meter-fill" style="transform:scaleX(0.65);"></div>
-            </div>
-          </div>
+<script>
+  const tabs = document.querySelectorAll(".tab");
+  const sections = document.querySelectorAll("section");
 
-          <div class="meter">
-            <div class="meter-label">
-              <span>Software Engineering</span><span>授業で学習中</span>
-            </div>
-            <div class="meter-bar">
-              <div class="meter-fill" style="transform:scaleX(0.5);"></div>
-            </div>
-          </div>
+  tabs.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabs.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
-          <p style="margin-top:8px;" class="muted">
-            数値はあくまで自己評価で、「どこまでできるか」を整理するための目安として使っています。
-          </p>
-        </div>
-      </section>
-
-      <section id="works" data-section style="display:none;">
-        <div class="section-header">
-          <div class="section-title">Works</div>
-          <div class="section-pill">small projects</div>
-        </div>
-        <div class="section-body">
-          <p>まだ大きな制作物は少ないですが、授業や個人学習の中で作った「小さな作品」を通して、少しずつ理解を深めています。</p>
-
-          <div class="card-list">
-            <div class="card">
-              <div class="card-title">自己紹介用シングルページ</div>
-              <div class="card-meta">HTML / CSS / JavaScript · このページ</div>
-              <div class="card-body">
-                制約のある条件（1ファイル・外部ライブラリなし・スマホ対応）で構成を考えながら作成しました。
-                セクション分けやナビゲーションの挙動を通して、情報設計と UI のバランスを意識しています。
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">Git / GitHub の演習</div>
-              <div class="card-meta">GitHub Desktop / GitHub.com</div>
-              <div class="card-body">
-                commit / push / pull の基本操作を実際に試しながら、変更履歴を残すことの大切さを体感しました。
-                小さな変更でもメッセージを丁寧に書くことを意識しています。
-              </div>
-            </div>
-          </div>
-
-          <p style="margin-top:8px;" class="muted">
-            今後は、小さなツールやミニアプリなど、動きのあるものも増やしていきたいと考えています。
-          </p>
-        </div>
-      </section>
-
-      <section id="reflection" data-section style="display:none;">
-        <div class="section-header">
-          <div class="section-title">Reflection</div>
-          <div class="section-pill">learning log</div>
-        </div>
-        <div class="section-body">
-          <p>今回の自己紹介サイト作成では、「制約があるからこそ設計がはっきりする」という感覚を得ました。1ファイルにまとめる条件のおかげで、構造・見た目・動きの関係を意識しやすくなりました。</p>
-          <p>また、Git / GitHub を使って履歴を残しながら作業することで、「とりあえず動けばいい」から一歩進んで、「どの変更にどんな意味があるか」を考える習慣が少しずつ身についてきたと感じています。</p>
-          <p class="muted">
-            これからは、失敗も含めて小さく試し、記録し、振り返るサイクルを続けていきたいです。
-          </p>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="status">
-        <div class="status-dot"></div>
-        <span>local static page · no tracking / no external resources</span>
-      </div>
-      <div class="hint">
-        <span>tip:</span> タブを切り替えて各セクションを閲覧できます
-      </div>
-    </footer>
-  </div>
-
-  <script>
-    (function () {
-      const navLinks = document.querySelectorAll(".nav-link");
-      const sections = document.querySelectorAll("[data-section]");
-
-      navLinks.forEach(link => {
-        link.addEventListener("click", () => {
-          const targetId = link.getAttribute("data-target");
-
-          navLinks.forEach(l => l.classList.remove("active"));
-          link.classList.add("active");
-
-          sections.forEach(sec => {
-            sec.style.display = sec.id === targetId ? "block" : "none";
-          });
-        });
+      const target = btn.dataset.target;
+      sections.forEach(sec => {
+        sec.classList.toggle("active", sec.id === target);
       });
+    });
+  });
+</script>
 
-      const updatedEl = document.getElementById("last-updated");
-      if (updatedEl) {
-        const d = new Date();
-        const y = d.getFullYear();
-        const m = String(d.getMonth() + 1).padStart(2, "0");
-        const day = String(d.getDate()).padStart(2, "0");
-        updatedEl.textContent = `${y}-${m}-${day}`;
-      }
-    })();
-  </script>
 </body>
 </html>
-```
